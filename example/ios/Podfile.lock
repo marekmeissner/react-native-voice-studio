@@ -2803,7 +2803,7 @@ SPEC CHECKSUMS:
   ReactCodegen: 10a61330b137caaad6f7fbe7f5d0e7a40d621700
   ReactCommon: c6cd81778336e767e27fe63c6707dd6b735fff5c
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
-  VoiceStudio: 0d38db41c204e80f9be711edd2462f5b7d000b83
+  VoiceStudio: 988a1b1d76d26adffe21ffd8e9dcdb51c2fc500b
   Yoga: 6ca93c8c13f56baeec55eb608577619b17a4d64e
 
 PODFILE CHECKSUM: 784f57c7997a28611f956f542528eaae130bcfe2

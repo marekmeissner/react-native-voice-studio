@@ -5441,8 +5441,8 @@ __metadata:
   linkType: hard
 
 "es-iterator-helpers@npm:^1.2.1":
-  version: 1.2.2
-  resolution: "es-iterator-helpers@npm:1.2.2"
+  version: 1.3.0
+  resolution: "es-iterator-helpers@npm:1.3.0"
   dependencies:
     call-bind: "npm:^1.0.8"
     call-bound: "npm:^1.0.4"
@@ -5459,8 +5459,9 @@ __metadata:
     has-symbols: "npm:^1.1.0"
     internal-slot: "npm:^1.1.0"
     iterator.prototype: "npm:^1.1.5"
+    math-intrinsics: "npm:^1.1.0"
     safe-array-concat: "npm:^1.1.3"
-  checksum: 10c0/1ced8abf845a45e660dd77b5f3a64358421df70e4a0bd1897d5ddfefffed8409a6a2ca21241b9367e639df9eca74abc1c678b3020bffe6bee1f1826393658ddb
+  checksum: 10c0/00a5fa847b9285a949230127bfb9e78b37826418d1896bf76cc4911446f2be45e02707ea75b90cddc6d185761ea222b6c5250d166059d509781ffdd343f80598
   languageName: node
   linkType: hard
 
@@ -11325,58 +11326,58 @@ __metadata:
   languageName: node
   linkType: hard
 
-"turbo-darwin-64@npm:2.8.15":
-  version: 2.8.15
-  resolution: "turbo-darwin-64@npm:2.8.15"
+"turbo-darwin-64@npm:2.8.16":
+  version: 2.8.16
+  resolution: "turbo-darwin-64@npm:2.8.16"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-darwin-arm64@npm:2.8.15":
-  version: 2.8.15
-  resolution: "turbo-darwin-arm64@npm:2.8.15"
+"turbo-darwin-arm64@npm:2.8.16":
+  version: 2.8.16
+  resolution: "turbo-darwin-arm64@npm:2.8.16"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo-linux-64@npm:2.8.15":
-  version: 2.8.15
-  resolution: "turbo-linux-64@npm:2.8.15"
+"turbo-linux-64@npm:2.8.16":
+  version: 2.8.16
+  resolution: "turbo-linux-64@npm:2.8.16"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-linux-arm64@npm:2.8.15":
-  version: 2.8.15
-  resolution: "turbo-linux-arm64@npm:2.8.15"
+"turbo-linux-arm64@npm:2.8.16":
+  version: 2.8.16
+  resolution: "turbo-linux-arm64@npm:2.8.16"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo-windows-64@npm:2.8.15":
-  version: 2.8.15
-  resolution: "turbo-windows-64@npm:2.8.15"
+"turbo-windows-64@npm:2.8.16":
+  version: 2.8.16
+  resolution: "turbo-windows-64@npm:2.8.16"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-windows-arm64@npm:2.8.15":
-  version: 2.8.15
-  resolution: "turbo-windows-arm64@npm:2.8.15"
+"turbo-windows-arm64@npm:2.8.16":
+  version: 2.8.16
+  resolution: "turbo-windows-arm64@npm:2.8.16"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
 "turbo@npm:^2.5.6":
-  version: 2.8.15
-  resolution: "turbo@npm:2.8.15"
+  version: 2.8.16
+  resolution: "turbo@npm:2.8.16"
   dependencies:
-    turbo-darwin-64: "npm:2.8.15"
-    turbo-darwin-arm64: "npm:2.8.15"
-    turbo-linux-64: "npm:2.8.15"
-    turbo-linux-arm64: "npm:2.8.15"
-    turbo-windows-64: "npm:2.8.15"
-    turbo-windows-arm64: "npm:2.8.15"
+    turbo-darwin-64: "npm:2.8.16"
+    turbo-darwin-arm64: "npm:2.8.16"
+    turbo-linux-64: "npm:2.8.16"
+    turbo-linux-arm64: "npm:2.8.16"
+    turbo-windows-64: "npm:2.8.16"
+    turbo-windows-arm64: "npm:2.8.16"
   dependenciesMeta:
     turbo-darwin-64:
       optional: true
@@ -11392,7 +11393,7 @@ __metadata:
       optional: true
   bin:
     turbo: bin/turbo
-  checksum: 10c0/5a2b0ecf6cf5b6bc6ee54bbefbb319733ef0c4fd78e8c2a8c2bbf6afed193f629061b7f35eb579e12ebda27cb8eb637a0669d539abb044aaf7b538c8184e9489
+  checksum: 10c0/5ac16e61a723f45e8ab265d7bbeb932f8843e982d8b9eca07d8df4778d5c2152d96d2a54ddca761588c5a538178333cce5b55ba765a32c2cb4c5be07609c25de
   languageName: node
   linkType: hard
 

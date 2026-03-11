@@ -110,18 +110,11 @@
     ]
   },
   "codegenConfig": {
-    "name": "VoiceStudioViewSpec",
+    "name": "VoiceStudio",
     "type": "all",
     "jsSrcsDir": "src",
     "android": {
       "javaPackageName": "com.voicestudio"
-    },
-    "ios": {
-      "components": {
-        "VoiceStudioView": {
-          "className": "VoiceStudioView"
-        }
-      }
     }
   },
   "prettier": {
@@ -163,8 +156,8 @@
     }
   },
   "create-react-native-library": {
-    "type": "fabric-view",
-    "languages": "kotlin-objc",
+    "type": "turbo-module",
+    "languages": "kotlin-swift",
     "tools": [
       "eslint",
       "jest",

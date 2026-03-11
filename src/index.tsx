@@ -1,2 +1,2 @@
-export { default as VoiceStudioView } from './VoiceStudioViewNativeComponent';
-export * from './VoiceStudioViewNativeComponent';
+export { default as VoiceStudio } from './NativeVoiceStudioModule';
+export * from './NativeVoiceStudioModule';

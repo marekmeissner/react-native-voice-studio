@@ -1,10 +1,15 @@
-import { View, StyleSheet } from 'react-native';
-import { VoiceStudioView } from 'react-native-voice-studio';
+import { View, StyleSheet, Pressable, Text } from 'react-native';
+import { VoiceStudio } from 'react-native-voice-studio';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <VoiceStudioView color="#32a852" style={styles.box} />
+      <Pressable
+        style={styles.box}
+        onPress={() => VoiceStudio.startRecording()}
+      >
+        <Text>Press me</Text>
+      </Pressable>
     </View>
   );
 }
