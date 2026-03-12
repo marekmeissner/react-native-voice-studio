@@ -13,7 +13,10 @@ class VoiceStudioTurboPackage : TurboReactPackage() {
      * Initialize and export modules based on the name of the required module
      */
     override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
-        return null
+        return when (name) {
+          VoiceStudioModule.NAME -> VoiceStudioModule(reactContext)
+          else -> null
+        }
     }
 
     /**
@@ -24,6 +27,7 @@ class VoiceStudioTurboPackage : TurboReactPackage() {
          * Here declare the array of exported modules
          */
         val moduleList: Array<Class<out NativeModule?>> = arrayOf(
+          VoiceStudioModule::class.java
         )
         val reactModuleInfoMap: MutableMap<String, ReactModuleInfo> = HashMap()
         /**

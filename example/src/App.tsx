@@ -1,15 +1,39 @@
+import { useCallback, useState } from 'react';
 import { View, StyleSheet, Pressable, Text } from 'react-native';
 import { VoiceStudio } from 'react-native-voice-studio';
 
 export default function App() {
+  const [isRecording, setIsRecording] = useState(false);
+
+  const onStartRecording = useCallback(() => {
+    console.log('Recording started');
+    VoiceStudio.startRecording();
+    setIsRecording(true);
+  }, []);
+
+  const onStopRecording = useCallback(() => {
+    console.log('Recording stopped');
+    VoiceStudio.stopRecording();
+    setIsRecording(false);
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Pressable
-        style={styles.box}
-        onPress={() => VoiceStudio.startRecording()}
-      >
-        <Text>Press me</Text>
-      </Pressable>
+      {!isRecording ? (
+        <Pressable
+          style={[styles.button, styles.notRecordingButton]}
+          onPress={onStartRecording}
+        >
+          <Text style={styles.buttonText}>Start Recording</Text>
+        </Pressable>
+      ) : (
+        <Pressable
+          style={[styles.button, styles.recordingButton]}
+          onPress={onStopRecording}
+        >
+          <Text style={styles.buttonText}>Stop Recording</Text>
+        </Pressable>
+      )}
     </View>
   );
 }
@@ -20,9 +44,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  box: {
-    width: 60,
+  button: {
     height: 60,
-    marginVertical: 20,
+    backgroundColor: '#eee',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    borderRadius: 8,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  recordingButton: {
+    backgroundColor: 'red',
+  },
+  notRecordingButton: {
+    backgroundColor: 'green',
   },
 });
