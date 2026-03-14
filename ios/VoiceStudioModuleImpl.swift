@@ -1,13 +1,20 @@
 import UIKit
+import AVFAudio
 
 @objc(VoiceStudioModuleImpl)
 public class VoiceStudioModuleImpl: NSObject {
 
   @objc public func startRecording() {
-    print("Started Recording")
+    AVAudioSession.sharedInstance().requestRecordPermission { granted in
+      if granted {
+        print("Permission granted")
+      } else {
+        print("Permission to record audio was denied.")
+      }
+    }
   }
 
   @objc public func stopRecording() {
-    print("Stopped Recording")
+    print("Recording stopped")
   }
 }
