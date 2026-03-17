@@ -16,12 +16,14 @@
 #import "VoiceStudio.h"
 
 // Each turbo module extends codegenerated spec class
-@interface VoiceStudioModule () <NativeVoiceStudioModuleSpec>
+@interface VoiceStudioModule () <VoiceStudioModuleDelegate>
 @end
 
 // Declare the ObjC implementation for that native module class
 @implementation VoiceStudioModule {
   VoiceStudioModuleImpl *moduleImpl;
+  RCTPromiseResolveBlock resolveBlock;
+  RCTPromiseRejectBlock rejectBlock;
 }
 
 // Return the name of the module - it should match the name provided in JS specification
@@ -31,6 +33,7 @@ RCT_EXPORT_MODULE(VoiceStudio)
     self = [super init];
     if (self) {
         moduleImpl = [VoiceStudioModuleImpl new];
+        moduleImpl.delegate = self;
     }
     return self;
 }
@@ -41,6 +44,24 @@ RCT_EXPORT_MODULE(VoiceStudio)
     return YES;
 }
 
+- (void)onSuccess
+{
+    if (resolveBlock != nil) {
+        resolveBlock(@(YES));
+    }
+    resolveBlock = nil;
+    rejectBlock = nil;
+}
+
+- (void)onError:(NSError *)error
+{
+    if (rejectBlock != nil) {
+        rejectBlock([NSString stringWithFormat:@"%@", @(error.code)], error.localizedDescription, error);
+    }
+    resolveBlock = nil;
+    rejectBlock = nil;
+}
+
 /**
  * If the module interacts with UIKit,
  * it can declare that its methods should be run on main queue
@@ -49,15 +70,17 @@ RCT_EXPORT_MODULE(VoiceStudio)
     return dispatch_get_main_queue();
 }
 
-- (void)startRecording
-{
-  [moduleImpl startRecording];
+RCT_EXPORT_METHOD(startRecording:(RCTPromiseResolveBlock)resolve
+                      reject:(RCTPromiseRejectBlock)reject) {
+    resolveBlock = resolve;
+    rejectBlock = reject;
+    [moduleImpl startRecordingSession];
 }
 
-- (void)stopRecording
-{
-  [moduleImpl stopRecording];
+RCT_EXPORT_METHOD(stopRecording) {
+  [moduleImpl stopRecordingSession];
 }
+    
 // Implement RCTTurboModule protocol
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
     (const facebook::react::ObjCTurboModule::InitParams &)params

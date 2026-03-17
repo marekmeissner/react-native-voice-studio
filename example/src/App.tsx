@@ -5,10 +5,20 @@ import { VoiceStudio } from 'react-native-voice-studio';
 export default function App() {
   const [isRecording, setIsRecording] = useState(false);
 
-  const onStartRecording = useCallback(() => {
-    console.log('Recording started');
-    VoiceStudio.startRecording();
-    setIsRecording(true);
+  const onStartRecording = useCallback(async () => {
+    try {
+      await VoiceStudio.startRecording();
+      setIsRecording(true);
+      console.log('Recording Started');
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      } else {
+        console.log(
+          'An unexpected error occurred while starting the recording.'
+        );
+      }
+    }
   }, []);
 
   const onStopRecording = useCallback(() => {
