@@ -59,6 +59,10 @@ RCT_EXPORT_METHOD(startRecording:(RCTPromiseResolveBlock)resolve
 RCT_EXPORT_METHOD(stopRecording) {
   [moduleImpl stopRecordingSession];
 }
+
+RCT_EXPORT_METHOD(openSettings) {
+  [moduleImpl openAppSettings];
+}
     
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
     (const facebook::react::ObjCTurboModule::InitParams &)params

@@ -1,16 +1,16 @@
 import type { TurboModule } from 'react-native';
 import { TurboModuleRegistry } from 'react-native';
 
-export type StartRecordingError =
-  | 'PERMISSION_DENIED'
-  | 'AUDIO_SESSION_ERROR'
-  | 'RECORDER_SETUP_ERROR'
-  | 'DOCUMENT_PICKER_CANCELLED'
-  | 'NO_ROOT_VIEW_CONTROLLER';
+export enum VoiceStudioError {
+  PERMISSION_DENIED = 'PERMISSION_DENIED',
+  DOCUMENT_PICKER_CANCELLED = 'DOCUMENT_PICKER_CANCELLED',
+  UNEXPECTED_ERROR = 'UNEXPECTED_ERROR',
+}
 
 export interface Spec extends TurboModule {
   startRecording(): Promise<void>;
-  stopRecording(): void;
+  stopRecording(): Promise<void>;
+  openSettings(): void;
 }
 
 export default TurboModuleRegistry.getEnforcing<Spec>('VoiceStudio');

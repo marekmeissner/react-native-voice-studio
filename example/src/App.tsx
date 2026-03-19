@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { View, StyleSheet, Pressable, Text } from 'react-native';
-import { VoiceStudio } from 'react-native-voice-studio';
+import { VoiceStudio, VoiceStudioError } from 'react-native-voice-studio';
 
 export default function App() {
   const [isRecording, setIsRecording] = useState(false);
@@ -9,10 +9,12 @@ export default function App() {
     try {
       await VoiceStudio.startRecording();
       setIsRecording(true);
-      console.log('Recording Started');
     } catch (error) {
-      if (error instanceof Error) {
-        console.log(error.message);
+      if (
+        error instanceof Error &&
+        error.message === VoiceStudioError.PERMISSION_DENIED
+      ) {
+        VoiceStudio.openSettings();
       } else {
         console.log(
           'An unexpected error occurred while starting the recording.'

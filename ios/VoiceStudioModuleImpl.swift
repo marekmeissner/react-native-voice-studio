@@ -27,7 +27,7 @@ public class VoiceStudioModuleImpl: NSObject {
         }
       }
     } catch {
-      delegate?.onError(VoiceStudioModuleError.audioSessionError)
+      delegate?.onError(VoiceStudioModuleError.unexpectedError)
     }
   }
 
@@ -47,7 +47,7 @@ public class VoiceStudioModuleImpl: NSObject {
       audioRecorder?.record()
       delegate?.onSuccess()
     } catch {
-      delegate?.onError(VoiceStudioModuleError.recorderSetupError)
+      delegate?.onError(VoiceStudioModuleError.unexpectedError)
     }
   }
 
@@ -57,8 +57,13 @@ public class VoiceStudioModuleImpl: NSObject {
     
     if let rootVC = UIApplication.shared.firstKeyWindow?.rootViewController {
       presentSaveDialog(from: rootVC)
-    } else {
-      delegate?.onError(VoiceStudioModuleError.noRootViewController)
+    }
+  }
+
+  @objc public func openAppSettings () {
+    let url = URL(string:UIApplication.openSettingsURLString)
+    if UIApplication.shared.canOpenURL(url!){
+      UIApplication.shared.open(url!, options: [:], completionHandler: nil)
     }
   }
   
