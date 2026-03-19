@@ -9,7 +9,7 @@ export enum VoiceStudioError {
 
 export interface Spec extends TurboModule {
   startRecording(): Promise<void>;
-  stopRecording(): Promise<void>;
+  stopRecording(): void;
   openSettings(): void;
 }
 

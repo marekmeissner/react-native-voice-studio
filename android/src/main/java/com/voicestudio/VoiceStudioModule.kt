@@ -8,19 +8,39 @@ import com.facebook.react.module.annotations.ReactModule
 
 @ReactModule(name = VoiceStudioModule.NAME)
 class VoiceStudioModule(
-  // Each native module class consumes react application context
   reactContext: ReactApplicationContext
-): NativeVoiceStudioModuleSpec(reactContext) {
+) : NativeVoiceStudioModuleSpec(reactContext) {
   private val moduleImpl = VoiceStudioModuleImpl(reactContext)
+
+  private var promiseBlock: Promise? = null
 
   override fun getName() = VoiceStudioModuleImpl.NAME
 
-  override fun startRecording() {
-    moduleImpl.handleRecording("Start recording");
+  init {
+    VoiceStudioModuleImpl.listener = object : VoiceStudioModuleImpl.VoiceStudioModuleListener {
+      override fun onSuccess() {
+        promiseBlock?.resolve(true)
+        promiseBlock = null
+      }
+
+      override fun onError(error: Exception) {
+        promiseBlock?.reject("E_RECORDING_ERROR", error.message, error)
+        promiseBlock = null
+      }
+    }
+  }
+
+  override fun startRecording(promise: Promise) {
+    promiseBlock = promise
+    moduleImpl.startRecordingSession()
   }
 
   override fun stopRecording() {
-    moduleImpl.handleRecording("Stop recording")
+    moduleImpl.stopRecordingSession()
+  }
+
+  override fun openSettings() {
+    moduleImpl.openSettings()
   }
 
   companion object {
