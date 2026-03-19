@@ -1,21 +1,25 @@
 package com.voicestudio
 
 import com.facebook.react.bridge.ReactApplicationContext
-import android.media.MediaRecorder
+
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+import android.media.MediaRecorder
 import android.Manifest
 import android.content.pm.PackageManager
-import androidx.core.content.ContextCompat
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
+
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 
 class VoiceStudioModuleImpl(private val reactContext: ReactApplicationContext) {
   private var audioRecorder: MediaRecorder? = null
   private var isFirstTimeRequest: Boolean = true
-  private val activity = reactContext.currentActivity
 
   interface VoiceStudioModuleListener {
     fun onSuccess()
@@ -23,7 +27,7 @@ class VoiceStudioModuleImpl(private val reactContext: ReactApplicationContext) {
   }
 
   fun startRecordingSession() {
-    if (activity == null) {
+    val activity = reactContext.currentActivity ?: run {
       listener?.onError(Exception("UNEXPECTED_ERROR"))
       return
     }
@@ -59,10 +63,10 @@ class VoiceStudioModuleImpl(private val reactContext: ReactApplicationContext) {
 
   fun openSettings() {
     reactContext.currentActivity?.let { activity ->
-      val intent =
-        android.content.Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-      val uri = android.net.Uri.fromParts("package", reactContext.packageName, null)
-      intent.data = uri
+      val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+        data = Uri.fromParts("package", reactContext.packageName, null)
+      }
+
       activity.startActivity(intent)
     }
   }
