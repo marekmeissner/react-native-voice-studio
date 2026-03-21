@@ -37,23 +37,8 @@ class VoiceStudioModuleImpl(private val reactContext: ReactApplicationContext) {
     }
 
     if (isRecordPermissionGranted()) {
-      val file = getRecordingFile()
-
-      audioRecorder = MediaRecorder().apply {
-        setAudioSource(MediaRecorder.AudioSource.MIC)
-        setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
-        setOutputFile(file.absolutePath)
-        setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-        setAudioSamplingRate(44100)
-        setAudioEncodingBitRate(128000)
-        setAudioChannels(1)
-        prepare()
-        start()
-      }
-
-      listener?.onSuccess();
+      setupRecorder();
     } else {
-
       ActivityCompat.shouldShowRequestPermissionRationale(
         activity,
         Manifest.permission.RECORD_AUDIO
@@ -122,11 +107,12 @@ class VoiceStudioModuleImpl(private val reactContext: ReactApplicationContext) {
         setAudioSamplingRate(44100)
         setAudioEncodingBitRate(128000)
         setAudioChannels(1)
-        prepare()
-        start()
       }
 
-      listener?.onSuccess()
+      audioRecorder?.prepare();
+      audioRecorder?.start();
+
+      listener?.onSuccess();
     } catch (e: Exception) {
       Log.e(NAME, "Failed to setup recorder", e)
 
@@ -138,7 +124,6 @@ class VoiceStudioModuleImpl(private val reactContext: ReactApplicationContext) {
   private fun getRecordingFile(): File {
     val formatter = SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.getDefault())
     val fileName = "${formatter.format(Date())}.m4a"
-
 
     val dir = File(reactContext.getExternalFilesDir(null), NAME)
 
