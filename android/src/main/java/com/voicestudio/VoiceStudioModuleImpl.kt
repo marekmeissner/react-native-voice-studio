@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+import android.app.Activity
 import android.media.MediaRecorder
 import android.Manifest
 import android.content.pm.PackageManager
@@ -18,14 +19,16 @@ import android.util.Log
 
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.ActivityResultLauncher
 
 class VoiceStudioModuleImpl(private val reactContext: ReactApplicationContext) {
   private var audioRecorder: MediaRecorder? = null
   private var isFirstTimeRequest: Boolean = true
-  private var currentOutputFile: File? = null
 
   interface VoiceStudioModuleListener {
-    fun onSuccess()
+    fun onSuccess(uri: Uri?, outputFile: File?)
     fun onError(error: Exception)
   }
 
@@ -70,8 +73,15 @@ class VoiceStudioModuleImpl(private val reactContext: ReactApplicationContext) {
         putExtra(Intent.EXTRA_TITLE, currentOutputFile?.name ?: "recording.m4a")
       }
 
+      val launcher = activityLauncher
+
+      if (launcher == null) {
+        Log.e(NAME, "Activity launcher not registered")
+        return
+      }
+
       UiThreadUtil.runOnUiThread {
-        reactContext.currentActivity?.startActivityForResult(intent, REQUEST_CREATE_FILE)
+        launcher.launch(intent)
       }
     } catch (e: Exception) {
       Log.e(NAME, "stopRecordingSession failed", e)
@@ -97,7 +107,7 @@ class VoiceStudioModuleImpl(private val reactContext: ReactApplicationContext) {
 
   private fun setupRecorder() {
     try {
-      val file = getRecordingFile()
+      val file = createRecordingFile()
 
       audioRecorder = MediaRecorder().apply {
         setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -112,7 +122,7 @@ class VoiceStudioModuleImpl(private val reactContext: ReactApplicationContext) {
       audioRecorder?.prepare();
       audioRecorder?.start();
 
-      listener?.onSuccess();
+      listener?.onSuccess(null, null);
     } catch (e: Exception) {
       Log.e(NAME, "Failed to setup recorder", e)
 
@@ -121,7 +131,7 @@ class VoiceStudioModuleImpl(private val reactContext: ReactApplicationContext) {
     }
   }
 
-  private fun getRecordingFile(): File {
+  private fun createRecordingFile(): File {
     val formatter = SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.getDefault())
     val fileName = "${formatter.format(Date())}.m4a"
 
@@ -140,7 +150,25 @@ class VoiceStudioModuleImpl(private val reactContext: ReactApplicationContext) {
     private const val REQUEST_RECORD_AUDIO = 1001
     private const val REQUEST_CREATE_FILE = 1002
     const val NAME = "VoiceStudio"
+    
+    private var currentOutputFile: File? = null
+    private var activityLauncher: ActivityResultLauncher<Intent>? = null
 
     var listener: VoiceStudioModuleListener? = null
+
+    fun registerActivityLauncher(activity: AppCompatActivity) {
+      activityLauncher =
+        activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+          when (result.resultCode) {
+            Activity.RESULT_OK -> {
+              listener?.onSuccess(result.data?.data, currentOutputFile)
+            }
+
+            else -> {
+              Log.e(NAME, "Unknown result when saving the file")
+            }
+          }
+        }
+    }
   }
 }

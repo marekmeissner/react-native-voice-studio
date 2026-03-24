@@ -6,6 +6,10 @@ import com.facebook.react.bridge.Callback
 import com.facebook.react.bridge.Promise
 import com.facebook.react.module.annotations.ReactModule
 
+import java.io.File
+
+import android.net.Uri
+
 @ReactModule(name = VoiceStudioModule.NAME)
 class VoiceStudioModule(
   reactContext: ReactApplicationContext
@@ -18,9 +22,20 @@ class VoiceStudioModule(
 
   init {
     VoiceStudioModuleImpl.listener = object : VoiceStudioModuleImpl.VoiceStudioModuleListener {
-      override fun onSuccess() {
+      override fun onSuccess(uri: Uri?, outputFile: File?) {
+
         promiseBlock?.resolve(true)
         promiseBlock = null
+
+        if (uri != null && outputFile != null) {
+          outputFile.inputStream().use { sourceInputStream ->
+            uri?.let {
+              reactContext.contentResolver.openOutputStream(it)?.use { outputStream ->
+                sourceInputStream.copyTo(outputStream)
+              }
+            }
+          }
+        }
       }
 
       override fun onError(error: Exception) {
