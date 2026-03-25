@@ -1,37 +1,205 @@
-# react-native-voice-studio
+# 🎙️ React Native Voice Studio
 
-React Native module for audio recording
-
-## Installation
-
-
-```sh
-npm install react-native-voice-studio
-```
-
-
-## Usage
-
-
-```js
-import { VoiceStudioView } from "react-native-voice-studio";
-
-// ...
-
-<VoiceStudioView color="tomato" />
-```
-
-
-## Contributing
-
-- [Development workflow](CONTRIBUTING.md#development-workflow)
-- [Sending a pull request](CONTRIBUTING.md#sending-a-pull-request)
-- [Code of conduct](CODE_OF_CONDUCT.md)
-
-## License
-
-MIT
+A lightweight **React Native TurboModule** for handling audio recording with native performance.
 
 ---
 
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
+## ✨ Features
+
+- Start and stop audio recording
+- Native TurboModule
+- Simple API surface
+- Handles permission & system settings redirection
+
+---
+
+## 📦 Installation
+
+```bash
+npm install react-native-voice-studio
+# or
+yarn add react-native-voice-studio
+```
+
+Then install pods (iOS):
+
+```bash
+cd ios && pod install
+```
+
+---
+
+## ⚙️ Android Setup (IMPORTANT)
+
+You **must** register the activity launcher in your `MainActivity`.
+
+### Step 1: Open `MainActivity.kt`
+
+```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    VoiceStudioModuleImpl.registerActivityLauncher(this)
+}
+```
+
+### 💡 Why is this required?
+
+The module needs access to the current `Activity` to:
+
+- Launch system UI flows (e.g. permissions, document picker)
+- Handle results from Android activity-based APIs
+
+Without this:
+- Permission flows may fail ❌
+- Document picker may not work ❌
+- You may encounter unexpected crashes ❌
+
+---
+
+## 🍎 iOS Setup (Audio Recording)
+
+To enable audio recording on iOS, you need to configure permissions and audio session properly.
+
+---
+
+### Step 1: Add Microphone Permission
+
+Open your `Info.plist` and add:
+
+```xml
+<key>NSMicrophoneUsageDescription</key>
+<string>This app needs access to your microphone to record audio.</string>
+```
+
+### 💡 Why is this required?
+
+iOS enforces strict privacy rules. Without this key:
+
+- The app will crash immediately when trying to access the microphone ❌
+- The permission dialog will not appear ❌
+
+---
+
+### ⚠️ Important Notes
+
+- If the user denies permission permanently:
+  - You must guide them to Settings
+  - `openSettings()` method will handle this
+
+---
+
+## 📘 API
+
+### Methods
+
+#### `startRecording()`
+
+```ts
+startRecording(): Promise<void>
+```
+
+Starts audio recording.
+
+- Requests permission if needed
+- Throws error if permission is denied
+
+---
+
+#### `stopRecording()`
+
+```ts
+stopRecording(): void
+```
+
+Stops the current recording session.
+
+---
+
+#### `openSettings()`
+
+```ts
+openSettings(): void
+```
+
+Opens the app settings page.
+
+---
+
+## 🚨 Errors
+
+```ts
+export enum VoiceStudioError {
+  PERMISSION_DENIED = 'PERMISSION_DENIED',
+  DOCUMENT_PICKER_CANCELLED = 'DOCUMENT_PICKER_CANCELLED',
+  UNEXPECTED_ERROR = 'UNEXPECTED_ERROR',
+}
+```
+
+---
+
+### Error Handling Example
+
+```ts
+import VoiceStudio, { VoiceStudioError } from 'react-native-voice-studio';
+
+try {
+  await VoiceStudio.startRecording();
+} catch (e) {
+  if (e === VoiceStudioError.PERMISSION_DENIED) {
+    VoiceStudio.openSettings();
+    console.log('Permission denied');
+  }
+}
+```
+
+---
+
+## 🧠 Usage Example
+
+```ts
+import VoiceStudio from 'react-native-voice-studio';
+
+const start = async () => {
+  try {
+    await VoiceStudio.startRecording();
+    console.log('Recording started');
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const stop = () => {
+  VoiceStudio.stopRecording();
+  console.log('Recording stopped');
+};
+```
+
+---
+
+## 🔐 Permissions
+
+### Android
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+```
+
+---
+
+## 🐛 Troubleshooting
+
+### Recording doesn’t start
+
+- Check microphone permission
+- Ensure `registerActivityLauncher` is added (Android)
+
+### App crashes on startRecording
+
+- Missing permission keys (Android/iOS)
+- Module not linked properly
+
+---
+
+## 📄 License
+
+MIT
