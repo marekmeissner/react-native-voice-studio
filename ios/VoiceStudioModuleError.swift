@@ -9,8 +9,6 @@ extension VoiceStudioModuleError: LocalizedError {
         switch self {
         case .permissionDenied:
             return "PERMISSION_DENIED"
-        case .documentPickerCancelled:
-            return "DOCUMENT_PICKER_CANCELLED"
         case .unexpectedError:
             return "UNEXPECTED_ERROR"
         }

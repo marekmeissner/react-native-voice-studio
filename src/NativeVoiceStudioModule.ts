@@ -3,7 +3,6 @@ import { TurboModuleRegistry } from 'react-native';
 
 export enum VoiceStudioError {
   PERMISSION_DENIED = 'PERMISSION_DENIED',
-  DOCUMENT_PICKER_CANCELLED = 'DOCUMENT_PICKER_CANCELLED',
   UNEXPECTED_ERROR = 'UNEXPECTED_ERROR',
 }
 
