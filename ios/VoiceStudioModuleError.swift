@@ -1,6 +1,5 @@
 enum VoiceStudioModuleError: Error {
     case permissionDenied
-    case documentPickerCancelled
     case unexpectedError
 }
 
