@@ -194,7 +194,8 @@ const stop = () => {
 
 ### 🤖 Android
 
-https://github.com/user-attachments/assets/071d5d9e-2021-43b3-80c4-c83d977a089b
+https://github.com/user-attachments/assets/9fadd5e4-fa1a-4144-9930-7d63db37d857
+
 
 ### 🍎 iOS
 
