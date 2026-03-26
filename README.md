@@ -192,11 +192,11 @@ const stop = () => {
 
 ## 📱 Demos
 
-### 🍎 iOS
+### 🤖 Android
 
 https://github.com/user-attachments/assets/071d5d9e-2021-43b3-80c4-c83d977a089b
 
-### 🤖 Android
+### 🍎 iOS
 
 https://github.com/user-attachments/assets/9f037ee0-5b33-49de-8e7c-64dae7818040
 
