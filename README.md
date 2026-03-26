@@ -7,11 +7,13 @@ A lightweight **React Native TurboModule** for handling audio recording with nat
 ## ✨ Features
 
 - Start and stop audio recording
+- Saves recording to place of your choice in documents
 - Native TurboModule
 - Simple API surface
-- Handles permission & system settings redirection
+- Handles permission & system settings redirection 
 
 ---
+
 
 ## 📦 Installation
 
@@ -36,6 +38,9 @@ You **must** register the activity launcher in your `MainActivity`.
 ### Step 1: Open `MainActivity.kt`
 
 ```kotlin
+import android.os.Bundle; 
+import com.voicestudio.VoiceStudioModuleImpl
+...
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     VoiceStudioModuleImpl.registerActivityLauncher(this)
@@ -124,6 +129,12 @@ openSettings(): void
 Opens the app settings page.
 
 ---
+
+## 📱 Demos
+
+| 🍎 iOS | 🤖 Android |
+|------|-----------|
+| https://github.com/user-attachments/assets/071d5d9e-2021-43b3-80c4-c83d977a089b | https://github.com/user-attachments/assets/9f037ee0-5b33-49de-8e7c-64dae7818040 |
 
 ## 🚨 Errors
 
