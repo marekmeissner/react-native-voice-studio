@@ -2,6 +2,8 @@
 
 A lightweight **React Native TurboModule** for handling audio recording with native performance.
 
+**Not actively maintained, just for fun. Use as you like.**
+
 ---
 
 ## ✨ Features
@@ -55,9 +57,9 @@ The module needs access to the current `Activity` to:
 - Handle results from Android activity-based APIs
 
 Without this:
-- Permission flows may fail ❌
-- Document picker may not work ❌
-- You may encounter unexpected crashes ❌
+- Permission flows may fail
+- Document picker may not work
+- You may encounter unexpected crashes
 
 ---
 
@@ -80,16 +82,8 @@ Open your `Info.plist` and add:
 
 iOS enforces strict privacy rules. Without this key:
 
-- The app will crash immediately when trying to access the microphone ❌
-- The permission dialog will not appear ❌
-
----
-
-### ⚠️ Important Notes
-
-- If the user denies permission permanently:
-  - You must guide them to Settings
-  - `openSettings()` method will handle this
+- The app will crash immediately when trying to access the microphone
+- The permission dialog will not appear
 
 ---
 
@@ -126,7 +120,8 @@ Stops the current recording session.
 openSettings(): void
 ```
 
-Opens the app settings page.
+Opens the app settings page. 
+It's basically what Linking.openSettings does.
 
 ---
 
